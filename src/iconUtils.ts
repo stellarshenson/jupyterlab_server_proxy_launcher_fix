@@ -1,11 +1,9 @@
 import { LabIcon } from '@jupyterlab/ui-components';
-import { ServerConnection } from '@jupyterlab/services';
-import { URLExt } from '@jupyterlab/coreutils';
 
 /**
  * Fetch an SVG icon from a URL and create a LabIcon
  *
- * @param url - The URL to fetch the SVG from (can be relative or absolute)
+ * @param url - The URL to fetch the SVG from (already includes base path from server-proxy)
  * @param name - Unique name for the LabIcon
  * @returns A LabIcon instance, or null if fetching fails
  */
@@ -14,17 +12,13 @@ export async function fetchSvgIcon(
   name: string
 ): Promise<LabIcon | null> {
   try {
-    const settings = ServerConnection.makeSettings();
-
-    // Handle relative URLs by joining with baseUrl
-    const iconUrl = url.startsWith('/')
-      ? URLExt.join(settings.baseUrl, url)
-      : url;
-
-    const response = await fetch(iconUrl);
+    // The icon_url from server-proxy already includes the full path
+    // e.g., /user/konrad.jelen/server-proxy/icon/mlflow
+    // Just use it directly - the browser handles relative paths
+    const response = await fetch(url);
     if (!response.ok) {
       console.warn(
-        `[server-proxy-launcher-fix] Failed to fetch icon from ${iconUrl}: ${response.status}`
+        `[server-proxy-launcher-fix] Failed to fetch icon from ${url}: ${response.status}`
       );
       return null;
     }
@@ -34,7 +28,7 @@ export async function fetchSvgIcon(
     // Validate it looks like SVG
     if (!svgstr.includes('<svg')) {
       console.warn(
-        `[server-proxy-launcher-fix] Response from ${iconUrl} does not appear to be SVG`
+        `[server-proxy-launcher-fix] Response from ${url} does not appear to be SVG`
       );
       return null;
     }
