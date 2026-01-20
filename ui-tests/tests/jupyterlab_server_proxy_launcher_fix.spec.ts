@@ -16,10 +16,6 @@ test('should emit an activation console message', async ({ page }) => {
   await page.goto();
 
   expect(
-    logs.filter(
-      s =>
-        s ===
-        'JupyterLab extension jupyterlab_server_proxy_launcher_fix is activated!'
-    )
+    logs.filter(s => s === '[server-proxy-launcher-fix] Extension activated')
   ).toHaveLength(1);
 });
