@@ -17,7 +17,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
   description: 'Fixes SVG icon display for jupyter-server-proxy launchers',
   autoStart: true,
   activate: async (app: JupyterFrontEnd): Promise<void> => {
-    console.log('[server-proxy-launcher-fix] Extension activated');
+    console.log(
+      'JupyterLab extension jupyterlab_server_proxy_launcher_fix is activated!'
+    );
 
     try {
       const serversInfo = await fetchServersInfo();
