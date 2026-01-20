@@ -30,3 +30,6 @@ This journal tracks substantive work on documents, diagrams, and documentation c
 
 9. **Task - Add jupyter-server-proxy dependency** (v1.0.2): Added jupyter-server-proxy as required dependency<br>
    **Result**: Added `jupyter-server-proxy>=4.0.0` to `pyproject.toml` dependencies list. This ensures the parent extension is installed when the fix extension is installed, since the fix is meaningless without it.
+
+10. **Task - Fix CI failures and publish** (v1.0.2): Fixed remaining CI issues and prepared for initial release<br>
+    **Result**: Fixed UI test expecting wrong activation message - reverted test to expect standard format `JupyterLab extension jupyterlab_server_proxy_launcher_fix is activated!` and updated `src/index.ts` to log that exact message. Updated workspace `JUPYTERLAB_EXTENSION.md` to document requirement for standard activation message format. Added extension to parent `README.md` Fixes section and to `stellars_jupyterlab_fixes` metapackage (pyproject.toml and README.md). Removed redundant `jupyter_server` dependency from pyproject.toml since jupyter-server-proxy brings it transitively.
