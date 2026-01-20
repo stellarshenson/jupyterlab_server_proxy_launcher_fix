@@ -1,6 +1,6 @@
 {
     "name": "jupyterlab_server_proxy_launcher_fix",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Fix to the issue that when launchers configured in the jupyter config file with svg icons are in a different category than notebooks, icons are not displayed",
     "keywords": [
         "jupyter",
