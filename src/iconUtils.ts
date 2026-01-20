@@ -12,33 +12,18 @@ export async function fetchSvgIcon(
   name: string
 ): Promise<LabIcon | null> {
   try {
-    // The icon_url from server-proxy already includes the full path
-    // e.g., /user/konrad.jelen/server-proxy/icon/mlflow
-    // Just use it directly - the browser handles relative paths
     const response = await fetch(url);
     if (!response.ok) {
-      console.warn(
-        `[server-proxy-launcher-fix] Failed to fetch icon from ${url}: ${response.status}`
-      );
       return null;
     }
 
     const svgstr = await response.text();
-
-    // Validate it looks like SVG
     if (!svgstr.includes('<svg')) {
-      console.warn(
-        `[server-proxy-launcher-fix] Response from ${url} does not appear to be SVG`
-      );
       return null;
     }
 
     return new LabIcon({ name, svgstr });
-  } catch (error) {
-    console.warn(
-      `[server-proxy-launcher-fix] Error fetching icon from ${url}:`,
-      error
-    );
+  } catch {
     return null;
   }
 }

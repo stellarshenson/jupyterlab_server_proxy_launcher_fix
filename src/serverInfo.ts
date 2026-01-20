@@ -48,35 +48,21 @@ export async function fetchServersInfo(): Promise<IServersInfo> {
   const settings = ServerConnection.makeSettings();
   const requestUrl = URLExt.join(settings.baseUrl, 'server-proxy/servers-info');
 
-  console.log('[server-proxy-launcher-fix] Fetching from:', requestUrl);
-
   let response: Response;
   try {
     response = await ServerConnection.makeRequest(requestUrl, {}, settings);
   } catch (error) {
-    console.error('[server-proxy-launcher-fix] Network error:', error);
     throw new ServerConnection.NetworkError(error as Error);
   }
 
-  console.log('[server-proxy-launcher-fix] Response status:', response.status);
-
   if (!response.ok) {
-    // 404 means jupyter-server-proxy is not installed - this is expected in some environments
+    // 404 means jupyter-server-proxy is not installed - return empty list
     if (response.status === 404) {
-      console.warn(
-        '[server-proxy-launcher-fix] jupyter-server-proxy not installed (404)'
-      );
       return { server_processes: [] };
     }
-    const text = await response.text();
-    console.error(
-      '[server-proxy-launcher-fix] Response error:',
-      text.substring(0, 500)
-    );
     throw new ServerConnection.ResponseError(response);
   }
 
   const data = await response.json();
-  console.log('[server-proxy-launcher-fix] Raw response:', data);
   return data as IServersInfo;
 }

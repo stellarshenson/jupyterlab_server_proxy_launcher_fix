@@ -3,11 +3,7 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { LabIcon } from '@jupyterlab/ui-components';
-import {
-  fetchServersInfo,
-  isKernelCategory,
-  IServerProcess
-} from './serverInfo';
+import { fetchServersInfo, isKernelCategory } from './serverInfo';
 import { fetchSvgIcon, createTextIcon } from './iconUtils';
 
 const iconCache = new Map<string, LabIcon>();
@@ -25,11 +21,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const serversInfo = await fetchServersInfo();
       const serverProcesses = serversInfo.server_processes || [];
 
-      console.log(
-        '[server-proxy-launcher-fix] Found servers:',
-        serverProcesses.map((sp: IServerProcess) => sp.name)
-      );
-
       // Pre-fetch and cache icons for non-kernel categories
       for (const sp of serverProcesses) {
         if (!sp.launcher_entry.enabled) {
@@ -39,10 +30,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
         if (isKernelCategory(category)) {
           continue;
         }
-
-        console.log(
-          `[server-proxy-launcher-fix] Caching icon for "${sp.name}"`
-        );
 
         const iconName = `server-proxy-launcher-fix:${sp.name}`;
         let icon = sp.launcher_entry.icon_url
@@ -62,11 +49,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       }
 
-      console.log(
-        '[server-proxy-launcher-fix] Icon cache:',
-        Array.from(iconCache.keys())
-      );
-
       // Wrap commands.icon() to return cached icons for server-proxy:open
       const originalIcon = app.commands.icon.bind(app.commands);
       (app.commands as any).icon = (id: string, args: any = {}) => {
@@ -75,17 +57,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
           args.title &&
           iconCache.has(args.title)
         ) {
-          console.log(
-            `[server-proxy-launcher-fix] Returning icon for "${args.title}"`
-          );
           return iconCache.get(args.title);
         }
         return originalIcon(id, args);
       };
-
-      console.log('[server-proxy-launcher-fix] Wrapped commands.icon()');
-    } catch (error) {
-      console.warn('[server-proxy-launcher-fix] Failed to initialize:', error);
+    } catch {
+      // Silently fail - extension is non-critical
     }
   }
 };
