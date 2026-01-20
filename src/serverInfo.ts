@@ -61,6 +61,13 @@ export async function fetchServersInfo(): Promise<IServersInfo> {
   console.log('[server-proxy-launcher-fix] Response status:', response.status);
 
   if (!response.ok) {
+    // 404 means jupyter-server-proxy is not installed - this is expected in some environments
+    if (response.status === 404) {
+      console.warn(
+        '[server-proxy-launcher-fix] jupyter-server-proxy not installed (404)'
+      );
+      return { server_processes: [] };
+    }
     const text = await response.text();
     console.error(
       '[server-proxy-launcher-fix] Response error:',
