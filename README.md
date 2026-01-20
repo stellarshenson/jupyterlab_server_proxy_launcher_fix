@@ -11,7 +11,7 @@
 JupyterLab extension that fixes SVG icon display for [jupyter-server-proxy](https://github.com/jupyterhub/jupyter-server-proxy) launchers when placed in custom categories other than "Notebook" or "Console".
 
 > [!WARNING]
-> This extension is a temporary fix for [jupyter-server-proxy](https://github.com/jupyterhub/jupyter-server-proxy). The upstream issue is that JupyterLab's launcher only renders `kernelIconUrl` for "Notebook" and "Console" categories - for other categories it calls `commands.icon()` which server-proxy doesn't provide. Once jupyter-server-proxy implements proper icon support for custom categories, this extension will be deprecated.
+> This extension is a temporary fix for [jupyterhub/jupyter-server-proxy](https://github.com/jupyterhub/jupyter-server-proxy). Once the upstream project implements proper icon support for custom launcher categories, this extension will be deprecated. We look forward to our own obsolescence.
 
 ## The Problem
 
