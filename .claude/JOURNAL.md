@@ -27,3 +27,6 @@ This journal tracks substantive work on documents, diagrams, and documentation c
 
 8. **Task - Handle missing server-proxy gracefully** (v1.0.2): Fixed CI browser check failure when jupyter-server-proxy not installed<br>
    **Result**: CI browser check failed with 404 error on `/server-proxy/servers-info` endpoint because jupyter-server-proxy is not installed in test environment. Extension threw `ServerConnection.ResponseError` which crashed the browser check. Modified `src/serverInfo.ts` `fetchServersInfo()` to handle 404 gracefully - when response status is 404, return `{ server_processes: [] }` instead of throwing, with warning log "jupyter-server-proxy not installed (404)". This allows extension to load successfully when dependency is absent. Also updated workspace `JUPYTERLAB_EXTENSION.md` with new "Optional Dependency Graceful Handling" section documenting this pattern for other fix extensions.
+
+9. **Task - Add jupyter-server-proxy dependency** (v1.0.2): Added jupyter-server-proxy as required dependency<br>
+   **Result**: Added `jupyter-server-proxy>=4.0.0` to `pyproject.toml` dependencies list. This ensures the parent extension is installed when the fix extension is installed, since the fix is meaningless without it.
