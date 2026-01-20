@@ -27,12 +27,14 @@ The following workspace rules are STRICTLY ENFORCED for this project:
 - New browser tab settings being ignored, causing proxy to always open in separate tab
 
 **Technology Stack**:
+
 - TypeScript frontend extension
 - Python server extension
 - JupyterLab 4.0.0+
 - Uses copier-based extension template with jupyter-releaser CI/CD
 
 **Build System**:
+
 - Makefile-based workflow - always use `make install`, `make build`, `make test`
 - Never use direct `npm install`, `jlpm install`, `pip install` commands
 
