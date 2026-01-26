@@ -8,6 +8,9 @@
 [![Brought To You By KOLOMOLO](https://img.shields.io/badge/Brought%20To%20You%20By-KOLOMOLO-00ffff?style=flat)](https://kolomolo.com)
 [![Donate PayPal](https://img.shields.io/badge/Donate-PayPal-blue?style=flat)](https://www.paypal.com/donate/?hosted_button_id=B4KPBJDLLXTSA)
 
+> [!TIP]
+> This fix is part of the [stellars_jupyterlab_fixes](https://github.com/stellarshenson/stellars_jupyterlab_fixes) metapackage. Install all Stellars fixes at once: `pip install stellars_jupyterlab_fixes`
+
 JupyterLab extension that fixes SVG icon display for [jupyter-server-proxy](https://github.com/jupyterhub/jupyter-server-proxy) launchers when placed in custom categories other than "Notebook" or "Console".
 
 > [!WARNING]
